@@ -51,7 +51,22 @@
     }
 
     function sortData() {
-      $("#display").html("sort does not work");
+        UTdata.order(key,true).fetchAll()
+        .then(function(results) {
+          let msg = "";
+          for (let i = 0; i < results.length; i++) {
+            msg += results[i].get(key) + "<br>";
+          }
+          $("#display").removeClass();
+          $("#display").addClass("text-light");
+          $("#display").addClass("bg-primary");
+          $("#display").html(msg);
+        })
+        .catch(function(error) {
+          $("#display").removeClass();
+          $("#display").addClass("bg-warning");
+          $("#display").html("delete fail:" + JSON.stringify(error));
+        })
     }
 
     function countData() {
@@ -84,7 +99,7 @@
     <input type="text" id="update" placeholder="更新">
     <a onclick="updateData()" class="btn btn-outline-primary" role="button">Update</a>
   </div>
-  <div id="display" class="text-light bg-info">
+  <div id="display" class="text-light bg-info">   <!--Bootstrapによる色指定　text-light:明るい文字色bg-info:情報表示用背景色-->
     Results
   </div>
 </body>
